@@ -22,47 +22,64 @@ it is at least 300% faster than the code i implemented with python (which uses s
 ## Usage
 define a domain for optimization (specify x, y, z size)
 
-```Mathematica
+```
 domain = CreateFEADomain[20, 10, 10];
 ```
-<br>
+
 specify the boundary condition (loads, fixed nodes)
-```Mathematica
+
+
+```
 domain = Join @@ {domain, SetFixDOFRange[domain, {{0, 1, 0, 11, 0, 11}}, {{0, 1, 0, 11, 0, 11}}, {{0, 1, 0, 11, 0, 11}}]};
 domain = Join @@ {domain, SetLoadDOFRange[domain, {}, {}, {{20, 21, 5, 6, 0, 1}}, {}, {}, {1}]};
 ```
+
 the specification is in this format: {xmin, xmax, ymin, ymax, zmin, zmax}, where xmin start with 0 and xmax is excluded
 <br>
 then load the elemental stiffness matrix ke (currently only Q4.m and H8.m are available, which are for 2d and 3d problems respectively)
-```Mathematica
+
+```
 ke = ImportStiffnessMatrix[NotebookDirectory[] <> "H8.m", {a -> 0.5, b -> 0.5, c -> 0.5, Em -> 1, nu -> 1/3}];
 ```
+
 <br>
 set the dynamic variable to observe the process
-```Mathematica
+
+```
 Dynamic@$Info
 ```
+
 <br>
 then run the optimization
-```Mathematica
+
+```
 {result, process} = SIMP[domain, ke, 80, 0.1, True];
 ```
+
 <br>
 to visuale the result, use visualze2d and visualze3d accordingly
-```Mathematica
+
+```
 ListAnimate[Visualize3d[result, #] & /@ process]
 ```
+
 <br>
 the optimized design variable (the density/existence of each element) can be obtained via:
-```Mathematica
+
+```
 result["dsgvar"]
 ```
+
 which is a flattened list, and can be reshaped by
-```Mathematica
+
+```
 ArrayReshape[result["dsgvar"], {result["ny"], result["nx"]}]
 ```
+
 or
-```Mathematica
+
+```
 ArrayReshape[result["dsgvar"], {result["nz"], result["ny"], result["nx"]}]
 ```
+
 for 2d or 3d problem respectively.
