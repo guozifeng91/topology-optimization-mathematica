@@ -6,6 +6,9 @@ topology optimization using SIMP method by mathematica
 2d example<br>
 ![alt text](https://github.com/guozifeng91/topology-optimization-mathematica/blob/master/2d.gif)
 
+2d example<br>
+![alt text](https://github.com/guozifeng91/topology-optimization-mathematica/blob/master/2d-2.gif)
+
 3d example<br>
 ![alt text](https://github.com/guozifeng91/topology-optimization-mathematica/blob/master/3d.gif)
 
